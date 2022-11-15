@@ -1,1 +1,2 @@
-# tsai_eva8_assignments
+# The School of AI
+## Extensive Vision AI Program (EVA) - V8
