@@ -1,0 +1,6 @@
+matplotlib
+neptune-client
+PyYAML
+torch
+torchvision
+torchmetrics
