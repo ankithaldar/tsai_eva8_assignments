@@ -272,3 +272,43 @@ Analysis:
 
 ---
 ---
+## <em>Testing Model C</em>
+
+This is the Second model to be tested. We have tried Batch Normalization, Dropout & Global Average Pooling along with the convolution layers
+
+Below is the model summary for the model C
+```
+
+```
+
+## Training Logs
+### Image Logs
+<br/>
+<b>Loss logs for train & test</b>
+<img title="Loss logs for train & test" alt="Loss logs for train & test" src="assets/model_c_loss.png">
+<br/>
+<br/>
+<br/>
+<b>Accuracy logs for train & test</b>
+<img title="Accuracy logs for train & test" alt="Accuracy logs for train & test" src="assets/model_c_accuracy.png">
+
+### Text Logs
+```
+
+```
+---
+### Analysis
+Targets:
+ - Add Regularization, Dropout
+
+Results: (must include best train/test accuracies and total parameters)
+ - Parameters: 8,980
+ - Best Training Accuracy: 96.70%
+ - Best Test Accuracy: 96.72%
+
+Analysis:
+ - Regularization working.
+ - No over-fitting, model is capable if pushed further
+ - We are also not using GAP, but depending on a BIG sized kernel
+
+[Link to Model C](https://github.com/ankithaldar/tsai_eva8_assignments/blob/assign_4/eva8_phase01/assignment_4/src/model/test_model_c.py)

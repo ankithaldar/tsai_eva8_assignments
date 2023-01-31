@@ -13,6 +13,7 @@ from dataloaders.test_model_dataset import MNISTDataLoader
 from engine.base.base_engine import BaseEngine
 from model.test_model_a import TestModelA
 from model.test_model_b import TestModelB
+from model.test_model_c import TestModelC
 
 #imports
 
@@ -44,6 +45,8 @@ class TestModelEngine(BaseEngine):
       self.model = TestModelA(num_classes=self.hparams.num_classes)
     elif self.hparams.model_name == 'test_model_b':
       self.model = TestModelB(num_classes=self.hparams.num_classes)
+    elif self.hparams.model_name == 'test_model_c':
+      self.model = TestModelC(num_classes=self.hparams.num_classes)
 
 
   def _init_loss_function(self):
