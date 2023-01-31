@@ -2,4 +2,135 @@
 ## Phase 1 - Assignment 4
 ---
 
-## Testing Model A
+## <em>Testing Model A</em>
+
+This is the first model to be tested. We have only tried Batch Normalization along with the convolution layers
+
+Below is the model summary for the model A
+```
+Model Summary
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv2d-1           [-1, 10, 26, 26]              90
+            Conv2D-2           [-1, 10, 26, 26]               0
+       BatchNorm2d-3           [-1, 10, 26, 26]              20
+              ReLU-4           [-1, 10, 26, 26]               0
+         ConvBlock-5           [-1, 10, 26, 26]               0
+            Conv2d-6           [-1, 10, 24, 24]             900
+            Conv2D-7           [-1, 10, 24, 24]               0
+       BatchNorm2d-8           [-1, 10, 24, 24]              20
+              ReLU-9           [-1, 10, 24, 24]               0
+        ConvBlock-10           [-1, 10, 24, 24]               0
+           Conv2d-11           [-1, 20, 22, 22]           1,800
+           Conv2D-12           [-1, 20, 22, 22]               0
+      BatchNorm2d-13           [-1, 20, 22, 22]              40
+             ReLU-14           [-1, 20, 22, 22]               0
+        MaxPool2d-15           [-1, 20, 11, 11]               0
+        ConvBlock-16           [-1, 20, 11, 11]               0
+           Conv2d-17           [-1, 10, 11, 11]             200
+           Conv2D-18           [-1, 10, 11, 11]               0
+      BatchNorm2d-19           [-1, 10, 11, 11]              20
+             ReLU-20           [-1, 10, 11, 11]               0
+  TransitionBlock-21           [-1, 10, 11, 11]               0
+           Conv2d-22             [-1, 10, 9, 9]             900
+           Conv2D-23             [-1, 10, 9, 9]               0
+      BatchNorm2d-24             [-1, 10, 9, 9]              20
+             ReLU-25             [-1, 10, 9, 9]               0
+        ConvBlock-26             [-1, 10, 9, 9]               0
+           Conv2d-27             [-1, 10, 7, 7]             900
+           Conv2D-28             [-1, 10, 7, 7]               0
+      BatchNorm2d-29             [-1, 10, 7, 7]              20
+             ReLU-30             [-1, 10, 7, 7]               0
+        ConvBlock-31             [-1, 10, 7, 7]               0
+           Conv2d-32             [-1, 10, 7, 7]             100
+           Conv2D-33             [-1, 10, 7, 7]               0
+      BatchNorm2d-34             [-1, 10, 7, 7]              20
+             ReLU-35             [-1, 10, 7, 7]               0
+  TransitionBlock-36             [-1, 10, 7, 7]               0
+           Conv2d-37             [-1, 10, 1, 1]           4,910
+           Conv2D-38             [-1, 10, 1, 1]               0
+       LogSoftmax-39                   [-1, 10]               0
+================================================================
+Total params: 9,960
+```
+
+## Training Logs
+### Image Logs
+<br/>
+<b>Loss logs for train & test</b>
+<img title="Loss logs for train & test" alt="Loss logs for train & test" src="assets/model_a_loss.png">
+<br/>
+<br/>
+<br/>
+<b>Accuracy logs for train & test</b>
+<img title="Accuracy logs for train & test" alt="Accuracy logs for train & test" src="assets/model_a_accuracy.png">
+
+### Text Logs
+```
+Train Epoch: 1 | Loss: 0.2885 | Accuracy: 91.96%
+Test  Epoch: 1 | Loss: 0.0790 | Accuracy: 92.80%
+--------------------------------
+Train Epoch: 2 | Loss: 0.0666 | Accuracy: 95.19%
+Test  Epoch: 2 | Loss: 0.0582 | Accuracy: 95.41%
+--------------------------------
+Train Epoch: 3 | Loss: 0.0467 | Accuracy: 96.36%
+Test  Epoch: 3 | Loss: 0.0410 | Accuracy: 96.46%
+--------------------------------
+Train Epoch: 4 | Loss: 0.0370 | Accuracy: 97.00%
+Test  Epoch: 4 | Loss: 0.0366 | Accuracy: 97.06%
+--------------------------------
+Train Epoch: 5 | Loss: 0.0305 | Accuracy: 97.42%
+Test  Epoch: 5 | Loss: 0.0432 | Accuracy: 97.45%
+--------------------------------
+Train Epoch: 6 | Loss: 0.0273 | Accuracy: 97.70%
+Test  Epoch: 6 | Loss: 0.0335 | Accuracy: 97.72%
+--------------------------------
+Train Epoch: 7 | Loss: 0.0234 | Accuracy: 97.92%
+Test  Epoch: 7 | Loss: 0.0389 | Accuracy: 97.94%
+--------------------------------
+Train Epoch: 8 | Loss: 0.0222 | Accuracy: 98.08%
+Test  Epoch: 8 | Loss: 0.0400 | Accuracy: 98.09%
+--------------------------------
+Train Epoch: 9 | Loss: 0.0194 | Accuracy: 98.22%
+Test  Epoch: 9 | Loss: 0.0334 | Accuracy: 98.23%
+--------------------------------
+Train Epoch: 10 | Loss: 0.0187 | Accuracy: 98.33%
+Test  Epoch: 10 | Loss: 0.0329 | Accuracy: 98.34%
+--------------------------------
+Train Epoch: 11 | Loss: 0.0165 | Accuracy: 98.43%
+Test  Epoch: 11 | Loss: 0.0359 | Accuracy: 98.43%
+--------------------------------
+Train Epoch: 12 | Loss: 0.0137 | Accuracy: 98.52%
+Test  Epoch: 12 | Loss: 0.0346 | Accuracy: 98.52%
+--------------------------------
+Train Epoch: 13 | Loss: 0.0124 | Accuracy: 98.59%
+Test  Epoch: 13 | Loss: 0.0368 | Accuracy: 98.60%
+--------------------------------
+Train Epoch: 14 | Loss: 0.0115 | Accuracy: 98.66%
+Test  Epoch: 14 | Loss: 0.0412 | Accuracy: 98.66%
+--------------------------------
+Train Epoch: 15 | Loss: 0.0117 | Accuracy: 98.72%
+Test  Epoch: 15 | Loss: 0.0360 | Accuracy: 98.72%
+```
+---
+### Analysis
+Targets:
+ - Get the set-up right
+ - Set Transforms
+ - Set Data Loader
+ - Set Basic Working Code
+ - Set Basic Training  & Test Loop
+
+Results: (must include best train/test accuracies and total parameters)
+ - Parameters: 9,960
+ - Best Training Accuracy: 98.72%
+ - Best Test Accuracy: 98.72%
+
+Analysis:
+ - No over-fitting, model is capable if pushed further
+
+[Link to Model A](https://github.com/ankithaldar/tsai_eva8_assignments/blob/assign_4/eva8_phase01/assignment_4/src/model/test_model_a.py)
+---
+---
+## <em>Testing Model B</em>
