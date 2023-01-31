@@ -112,6 +112,7 @@ Test  Epoch: 14 | Loss: 0.0412 | Accuracy: 98.66%
 --------------------------------
 Train Epoch: 15 | Loss: 0.0117 | Accuracy: 98.72%
 Test  Epoch: 15 | Loss: 0.0360 | Accuracy: 98.72%
+--------------------------------
 ```
 ---
 ### Analysis
@@ -131,6 +132,143 @@ Analysis:
  - No over-fitting, model is capable if pushed further
 
 [Link to Model A](https://github.com/ankithaldar/tsai_eva8_assignments/blob/assign_4/eva8_phase01/assignment_4/src/model/test_model_a.py)
+
 ---
 ---
 ## <em>Testing Model B</em>
+
+This is the Second model to be tested. We have tried Batch Normalization and Dropout along with the convolution layers
+
+Below is the model summary for the model B
+```
+Model Summary
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv2d-1           [-1, 16, 26, 26]             144
+            Conv2D-2           [-1, 16, 26, 26]               0
+       BatchNorm2d-3           [-1, 16, 26, 26]              32
+              ReLU-4           [-1, 16, 26, 26]               0
+           Dropout-5           [-1, 16, 26, 26]               0
+         ConvBlock-6           [-1, 16, 26, 26]               0
+            Conv2d-7           [-1, 16, 24, 24]           2,304
+            Conv2D-8           [-1, 16, 24, 24]               0
+       BatchNorm2d-9           [-1, 16, 24, 24]              32
+             ReLU-10           [-1, 16, 24, 24]               0
+          Dropout-11           [-1, 16, 24, 24]               0
+        ConvBlock-12           [-1, 16, 24, 24]               0
+           Conv2d-13           [-1, 10, 24, 24]             160
+           Conv2D-14           [-1, 10, 24, 24]               0
+      BatchNorm2d-15           [-1, 10, 24, 24]              20
+             ReLU-16           [-1, 10, 24, 24]               0
+  TransitionBlock-17           [-1, 10, 24, 24]               0
+        MaxPool2d-18           [-1, 10, 12, 12]               0
+           Conv2d-19           [-1, 10, 10, 10]             900
+           Conv2D-20           [-1, 10, 10, 10]               0
+      BatchNorm2d-21           [-1, 10, 10, 10]              20
+             ReLU-22           [-1, 10, 10, 10]               0
+          Dropout-23           [-1, 10, 10, 10]               0
+        ConvBlock-24           [-1, 10, 10, 10]               0
+           Conv2d-25             [-1, 10, 8, 8]             900
+           Conv2D-26             [-1, 10, 8, 8]               0
+      BatchNorm2d-27             [-1, 10, 8, 8]              20
+             ReLU-28             [-1, 10, 8, 8]               0
+          Dropout-29             [-1, 10, 8, 8]               0
+        ConvBlock-30             [-1, 10, 8, 8]               0
+           Conv2d-31             [-1, 10, 6, 6]             900
+           Conv2D-32             [-1, 10, 6, 6]               0
+      BatchNorm2d-33             [-1, 10, 6, 6]              20
+             ReLU-34             [-1, 10, 6, 6]               0
+          Dropout-35             [-1, 10, 6, 6]               0
+        ConvBlock-36             [-1, 10, 6, 6]               0
+           Conv2d-37             [-1, 10, 6, 6]             900
+           Conv2D-38             [-1, 10, 6, 6]               0
+      BatchNorm2d-39             [-1, 10, 6, 6]              20
+             ReLU-40             [-1, 10, 6, 6]               0
+          Dropout-41             [-1, 10, 6, 6]               0
+        ConvBlock-42             [-1, 10, 6, 6]               0
+           Conv2d-43             [-1, 10, 1, 1]           3,610
+           Conv2D-44             [-1, 10, 1, 1]               0
+       LogSoftmax-45                   [-1, 10]               0
+================================================================
+Total params: 9,982
+```
+
+## Training Logs
+### Image Logs
+<br/>
+<b>Loss logs for train & test</b>
+<img title="Loss logs for train & test" alt="Loss logs for train & test" src="assets/model_b_loss.png">
+<br/>
+<br/>
+<br/>
+<b>Accuracy logs for train & test</b>
+<img title="Accuracy logs for train & test" alt="Accuracy logs for train & test" src="assets/model_b_accuracy.png">
+
+### Text Logs
+```
+Train Epoch: 1 | Loss: 0.4952 | Accuracy: 84.46%
+Test  Epoch: 1 | Loss: 0.1063 | Accuracy: 86.23%
+--------------------------------
+Train Epoch: 2 | Loss: 0.1260 | Accuracy: 90.83%
+Test  Epoch: 2 | Loss: 0.0654 | Accuracy: 91.33%
+--------------------------------
+Train Epoch: 3 | Loss: 0.0926 | Accuracy: 93.05%
+Test  Epoch: 3 | Loss: 0.0588 | Accuracy: 93.29%
+--------------------------------
+Train Epoch: 4 | Loss: 0.0749 | Accuracy: 94.27%
+Test  Epoch: 4 | Loss: 0.0431 | Accuracy: 94.42%
+--------------------------------
+Train Epoch: 5 | Loss: 0.0644 | Accuracy: 95.05%
+Test  Epoch: 5 | Loss: 0.0405 | Accuracy: 95.16%
+--------------------------------
+Train Epoch: 6 | Loss: 0.0611 | Accuracy: 95.60%
+Test  Epoch: 6 | Loss: 0.0372 | Accuracy: 95.68%
+--------------------------------
+Train Epoch: 7 | Loss: 0.0542 | Accuracy: 96.01%
+Test  Epoch: 7 | Loss: 0.0338 | Accuracy: 96.07%
+--------------------------------
+Train Epoch: 8 | Loss: 0.0500 | Accuracy: 96.33%
+Test  Epoch: 8 | Loss: 0.0321 | Accuracy: 96.37%
+--------------------------------
+Train Epoch: 9 | Loss: 0.0474 | Accuracy: 96.58%
+Test  Epoch: 9 | Loss: 0.0285 | Accuracy: 96.62%
+--------------------------------
+Train Epoch: 10 | Loss: 0.0461 | Accuracy: 96.79%
+Test  Epoch: 10 | Loss: 0.0310 | Accuracy: 96.82%
+--------------------------------
+Train Epoch: 11 | Loss: 0.0428 | Accuracy: 96.96%
+Test  Epoch: 11 | Loss: 0.0288 | Accuracy: 96.99%
+--------------------------------
+Train Epoch: 12 | Loss: 0.0407 | Accuracy: 97.12%
+Test  Epoch: 12 | Loss: 0.0284 | Accuracy: 97.14%
+--------------------------------
+Train Epoch: 13 | Loss: 0.0397 | Accuracy: 97.25%
+Test  Epoch: 13 | Loss: 0.0275 | Accuracy: 97.27%
+--------------------------------
+Train Epoch: 14 | Loss: 0.0388 | Accuracy: 97.36%
+Test  Epoch: 14 | Loss: 0.0272 | Accuracy: 97.38%
+--------------------------------
+Train Epoch: 15 | Loss: 0.0376 | Accuracy: 97.46%
+Test  Epoch: 15 | Loss: 0.0312 | Accuracy: 97.48%
+--------------------------------
+```
+---
+### Analysis
+Targets:
+ - Add Regularization, Dropout
+
+Results: (must include best train/test accuracies and total parameters)
+ - Parameters: 9,982
+ - Best Training Accuracy: 97.46%
+ - Best Test Accuracy: 97.48%
+
+Analysis:
+ - Regularization working.
+ - No over-fitting, model is capable if pushed further
+ - We are also not using GAP, but depending on a BIG sized kernel
+
+[Link to Model B](https://github.com/ankithaldar/tsai_eva8_assignments/blob/assign_4/eva8_phase01/assignment_4/src/model/test_model_b.py)
+
+---
+---
