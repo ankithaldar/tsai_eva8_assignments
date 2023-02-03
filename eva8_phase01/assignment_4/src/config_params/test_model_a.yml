@@ -1,0 +1,26 @@
+seed: 42
+model_name: "test_model_a"
+epochs: 15
+batch_size: 128
+num_classes: 10
+do_augment: None
+loss_function: "CrossEntropyLoss"
+optimizer: "SGD"
+learning_rate: 0.01
+lr_scheduler: None
+train_args:
+  shuffle: True
+  num_workers: 2
+  prefetch_factor: 1
+test_args:
+  shuffle: True
+  num_workers: 2
+  prefetch_factor: 1
+callbacks:
+  - 'logging'
+metrics:
+  - "accuracy"
+logger: "neptune"
+logger_init_params:
+  project_name: "ankithaldar/EVAPhase01"
+  assignment: "Assignemnt 4"

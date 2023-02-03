@@ -61,27 +61,37 @@ We have used a total of 13k parameters and have trained the model for 19 epochs.
 Below is the training logs for the same
 ```
 Training test_model_a...
-Epoch: 01 | m_mnist_accuracy: 87.58%
-Epoch: 02 | m_mnist_accuracy: 97.05%
-Epoch: 03 | m_mnist_accuracy: 97.81%
-Epoch: 04 | m_mnist_accuracy: 98.11%
-Epoch: 05 | m_mnist_accuracy: 98.33%
-Epoch: 06 | m_mnist_accuracy: 98.46%
-Epoch: 07 | m_mnist_accuracy: 98.59%
-Epoch: 08 | m_mnist_accuracy: 98.65%
-Epoch: 09 | m_mnist_accuracy: 98.70%
-Epoch: 10 | m_mnist_accuracy: 98.79%
-Epoch: 11 | m_mnist_accuracy: 98.83%
-Epoch: 12 | m_mnist_accuracy: 98.91%
-Epoch: 13 | m_mnist_accuracy: 98.99%
-Epoch: 14 | m_mnist_accuracy: 98.94%
-Epoch: 15 | m_mnist_accuracy: 99.01%
-Epoch: 16 | m_mnist_accuracy: 99.03%
+Epoch: 01 | m_mnist_accuracy: 88.13%
+Epoch: 02 | m_mnist_accuracy: 97.03%
+Epoch: 03 | m_mnist_accuracy: 97.74%
+Epoch: 04 | m_mnist_accuracy: 97.99%
+Epoch: 05 | m_mnist_accuracy: 98.24%
+Epoch: 06 | m_mnist_accuracy: 98.40%
+Epoch: 07 | m_mnist_accuracy: 98.42%
+Epoch: 08 | m_mnist_accuracy: 98.58%
+Epoch: 09 | m_mnist_accuracy: 98.72%
+Epoch: 10 | m_mnist_accuracy: 98.73%
+Epoch: 11 | m_mnist_accuracy: 98.82%
+Epoch: 12 | m_mnist_accuracy: 98.86%
+Epoch: 13 | m_mnist_accuracy: 98.87%
+Epoch: 14 | m_mnist_accuracy: 98.93%
+Epoch: 15 | m_mnist_accuracy: 98.93%
+Epoch: 16 | m_mnist_accuracy: 99.05%
 Epoch: 17 | m_mnist_accuracy: 99.05%
-Epoch: 18 | m_mnist_accuracy: 99.01%
-Epoch: 19 | m_mnist_accuracy: 99.10%
+Epoch: 18 | m_mnist_accuracy: 99.02%
+Epoch: 19 | m_mnist_accuracy: 99.09%
 Training Ended...
 Testing test_model_a...
-Epoch: 01 | m_mnist_accuracy: 99.12%
+Epoch: 01 | m_mnist_accuracy: 99.25%
 Testing Ended...
 ```
+## Training Logs
+### Image Logs
+<br/>
+<b>Loss Function for training</b>
+<img title="Loss Function for training" alt="Loss Function for training" src="assets/Loss.png">
+<br/>
+<br/>
+<br/>
+<b>Accuracy for training</b>
+<img title="Accuracy for training" alt="Accuracy for training" src="assets/Metrics.png">
