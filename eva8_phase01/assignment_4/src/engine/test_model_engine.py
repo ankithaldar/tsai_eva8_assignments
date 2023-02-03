@@ -14,6 +14,7 @@ from engine.base.base_engine import BaseEngine
 from model.test_model_a import TestModelA
 from model.test_model_b import TestModelB
 from model.test_model_c import TestModelC
+from model.test_model_d import TestModelD
 
 #imports
 
@@ -47,6 +48,8 @@ class TestModelEngine(BaseEngine):
       self.model = TestModelB(num_classes=self.hparams.num_classes)
     elif self.hparams.model_name == 'test_model_c':
       self.model = TestModelC(num_classes=self.hparams.num_classes)
+    elif self.hparams.model_name == 'test_model_d':
+      self.model = TestModelD(num_classes=self.hparams.num_classes)
 
 
   def _init_loss_function(self):
@@ -82,7 +85,11 @@ class TestModelEngine(BaseEngine):
         self.optimizer,
         **self.hparams.lr_scheduler_args
       )
-
+    elif self.hparams.lr_scheduler == 'MultiStepLR':
+      self.scheduler = torch.optim.lr_scheduler.MultiStepLR(
+        self.optimizer,
+        **self.hparams.lr_scheduler_args
+      )
 
   def _init_metrics(self):
     self.metrics = {}
