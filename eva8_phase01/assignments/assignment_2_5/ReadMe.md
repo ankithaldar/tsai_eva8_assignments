@@ -69,12 +69,12 @@ m_mnist_accuracy are the number of MNIST labels correctly predicted by our model
 ### Image Logs
 <br/>
 <b>Loss Function for training</b>
-<img title="Loss Function for training" alt="Loss Function for training" src="assets/Loss.png">
+<img title="Loss Function for training" alt="Loss Function for training" src="../../assets/assignment_2_5/Loss.png">
 <br/>
 <br/>
 <br/>
 <b>Accuracy for training</b>
-<img title="Accuracy for training" alt="Accuracy for training" src="assets/Metrics.png">
+<img title="Accuracy for training" alt="Accuracy for training" src="../../assets/assignment_2_5/Metrics.png">
 
 ### Text Logs
 
@@ -147,7 +147,7 @@ Attaching a screenshot of model training in GPU.
 <br/>
 <b>Model Training on GPU</b>
 <br/>
-<img title="Model Training on GPU" alt="Model Training on GPU" src="assets/GPU.png">
+<img title="Model Training on GPU" alt="Model Training on GPU" src="../../assets/assignment_2_5/GPU.png">
 <br/>
 <br/>
 We have used the following code to check that.

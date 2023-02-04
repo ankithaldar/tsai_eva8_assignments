@@ -15,7 +15,7 @@ from torch.utils.data import Dataset
 
 
 # classes
-class MNISTDataLoader(Dataset):
+class MNISTRandomDataLoader(Dataset):
   '''Dataloader for downloading and batching data'''
 
   def __init__(self, root:str='', train=False):

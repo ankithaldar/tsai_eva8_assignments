@@ -10,7 +10,7 @@ import torch.nn as nn
 import torchmetrics
 
 #   script imports
-from dataloaders.mnist_dataset import MNISTDataLoader
+from dataloaders.mnist_dataset import MNISTRandomDataLoader
 from engine.base.base_engine import BaseEngine
 from model.lenet import LeNet
 
@@ -25,14 +25,14 @@ class LeNetEngine(BaseEngine):
     super().__init__(hparams)
 
   def _init_train_dataloader(self):
-    self.train_ds = MNISTDataLoader(
+    self.train_ds = MNISTRandomDataLoader(
       root=str(self.hparams.data_path),
       train=True
     )
 
 
   def _init_test_dataloader(self):
-    self.test_ds = MNISTDataLoader(
+    self.test_ds = MNISTRandomDataLoader(
       root=str(self.hparams.data_path),
       train=False
     )
