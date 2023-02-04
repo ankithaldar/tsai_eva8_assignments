@@ -8,12 +8,14 @@ from argparse import ArgumentParser
 
 #   script imports
 from engine.lenet_engine import LeNetEngine
+from engine.test_model_engine import TestModelEngine
 from utils.module_params_parser import ModelParamsDecoder
 
 #imports
 
 def main(hparams=None):
-  pe = LeNetEngine(hparams)
+  # pe = LeNetEngine(hparams)
+  pe = TestModelEngine(hparams)
   pe.train()
   pe.test()
 

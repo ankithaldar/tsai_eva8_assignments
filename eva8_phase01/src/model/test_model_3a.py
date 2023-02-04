@@ -55,13 +55,13 @@ class ConvBlock(nn.Module):
 
 
 
-class TestModelA(nn.Module):
+class TestModel3A(nn.Module):
   '''
   docstring for TestModelA
   '''
 
   def __init__(self, num_classes: int):
-    super(TestModelA, self).__init__()
+    super(TestModel3A, self).__init__()
 
     # LAYERS FOR IMAGE RECOGNITION
     self.conv_block_1 = ConvBlock(in_channels= 1, out_channels=16, dropout=0.20)

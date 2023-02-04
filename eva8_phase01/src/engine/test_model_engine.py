@@ -11,7 +11,7 @@ import torchmetrics
 #   script imports
 from dataloaders.test_model_dataset import MNISTDataLoader
 from engine.base.base_engine import BaseEngine
-from model.test_model_a import TestModelA
+from model.test_model_3a import TestModel3A
 
 #imports
 
@@ -38,15 +38,14 @@ class TestModelEngine(BaseEngine):
 
 
   def _init_model(self):
-    if self.hparams.model_name == 'test_model_a':
-      self.model = TestModelA(num_classes=self.hparams.num_classes)
+    if self.hparams.model_name == 'test_model_3a':
+      self.model = TestModel3A(num_classes=self.hparams.num_classes)
 
 
   def _init_loss_function(self):
     if self.hparams.loss_function == 'CrossEntropyLoss':
       self.loss_function = {
         'loss_mnist': nn.CrossEntropyLoss()
-        # 'loss_sum': nn.CrossEntropyLoss()
       }
 
 

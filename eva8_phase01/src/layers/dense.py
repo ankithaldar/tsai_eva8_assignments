@@ -46,6 +46,7 @@ class Dense(nn.Module):
       'tanh': nn.Tanh(),
       'sigmoid': nn.Sigmoid(),
       'softmax': nn.Softmax(dim=1),
+      'log_softmax': nn.LogSoftmax(dim=1),
       'none': None
     }
 

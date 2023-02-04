@@ -8,10 +8,10 @@ Base Engine to train models
 
 #imports
 import torch
-from torch.utils.data import DataLoader
-
 #   script imports
 from callbacks.history import History
+from torch.utils.data import DataLoader
+from torchsummary import summary
 
 #imports
 
@@ -56,6 +56,13 @@ class BaseEngine:
   def _init_scheduler(self):
     self.scheduler = None
 
+  def _show_summary(self):
+    print('--------------------------------')
+    print('Model Summary')
+    print('--------------------------------')
+    print(summary(self.model, input_size=(1, 28, 28)))
+    print('--------------------------------')
+
   def _init_callbacks(self):
     self.history = History()
 
@@ -67,6 +74,8 @@ class BaseEngine:
 
   def setup(self):
     self._init_distribution()
+
+    self._show_summary()
 
 
   def _init_distribution(self):
