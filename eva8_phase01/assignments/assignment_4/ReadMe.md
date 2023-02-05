@@ -59,12 +59,12 @@ Total params: 9,950
 ### Image Logs
 <br/>
 <b>Loss logs for train & test</b>
-<img title="Loss logs for train & test" alt="Loss logs for train & test" src="assets/model_a_loss.png">
+<img title="Loss logs for train & test" alt="Loss logs for train & test" src="../../assets/assignment_4/model_a_loss.png">
 <br/>
 <br/>
 <br/>
 <b>Accuracy logs for train & test</b>
-<img title="Accuracy logs for train & test" alt="Accuracy logs for train & test" src="assets/model_a_accuracy.png">
+<img title="Accuracy logs for train & test" alt="Accuracy logs for train & test" src="../../assets/assignment_4/model_a_accuracy.png">
 
 ### Text Logs
 ```
@@ -132,7 +132,7 @@ Results: (must include best train/test accuracies and total parameters)
 Analysis:
  - No over-fitting, model is capable if pushed further
 
-[Link to Model A](https://github.com/ankithaldar/tsai_eva8_assignments/blob/main/eva8_phase01/assignment_4/src/model/test_model_a.py)
+[Link to Model A](https://github.com/ankithaldar/tsai_eva8_assignments/blob/main/eva8_phase01/src/model/test_model_4a.py)
 
 ---
 ---
@@ -199,12 +199,12 @@ Total params: 9,972
 ### Image Logs
 <br/>
 <b>Loss logs for train & test</b>
-<img title="Loss logs for train & test" alt="Loss logs for train & test" src="assets/model_b_loss.png">
+<img title="Loss logs for train & test" alt="Loss logs for train & test" src="../../assets/assignment_4/model_b_loss.png">
 <br/>
 <br/>
 <br/>
 <b>Accuracy logs for train & test</b>
-<img title="Accuracy logs for train & test" alt="Accuracy logs for train & test" src="assets/model_b_accuracy.png">
+<img title="Accuracy logs for train & test" alt="Accuracy logs for train & test" src="../../assets/assignment_4/model_b_accuracy.png">
 
 ### Text Logs
 ```
@@ -270,7 +270,7 @@ Analysis:
  - No over-fitting, model is capable if pushed further
  - We are also not using GAP, but depending on a BIG sized kernel
 
-[Link to Model B](https://github.com/ankithaldar/tsai_eva8_assignments/blob/main/eva8_phase01/assignment_4/src/model/test_model_b.py)
+[Link to Model B](https://github.com/ankithaldar/tsai_eva8_assignments/blob/main/eva8_phase01/src/model/test_model_4b.py)
 
 ---
 ---
@@ -338,12 +338,12 @@ Total params: 8,980
 ### Image Logs
 <br/>
 <b>Loss logs for train & test</b>
-<img title="Loss logs for train & test" alt="Loss logs for train & test" src="assets/model_c_loss.png">
+<img title="Loss logs for train & test" alt="Loss logs for train & test" src="../../assets/assignment_4/model_c_loss.png">
 <br/>
 <br/>
 <br/>
 <b>Accuracy logs for train & test</b>
-<img title="Accuracy logs for train & test" alt="Accuracy logs for train & test" src="assets/model_c_accuracy.png">
+<img title="Accuracy logs for train & test" alt="Accuracy logs for train & test" src="../../assets/assignment_4/model_c_accuracy.png">
 
 ### Text Logs
 ```
@@ -408,7 +408,7 @@ Analysis:
  - Dropout, Global Average Pooling not working.
  - No over-fitting, model is capable if pushed further
 
-[Link to Model C](https://github.com/ankithaldar/tsai_eva8_assignments/blob/main/eva8_phase01/assignment_4/src/model/test_model_c.py)
+[Link to Model C](https://github.com/ankithaldar/tsai_eva8_assignments/blob/main/eva8_phase01/src/model/test_model_4c.py)
 
 
 ---
@@ -477,12 +477,12 @@ Total params: 8,980
 ### Image Logs
 <br/>
 <b>Loss logs for train & test</b>
-<img title="Loss logs for train & test" alt="Loss logs for train & test" src="assets/model_d_loss.png">
+<img title="Loss logs for train & test" alt="Loss logs for train & test" src="../../assets/assignment_4/model_d_loss.png">
 <br/>
 <br/>
 <br/>
 <b>Accuracy logs for train & test</b>
-<img title="Accuracy logs for train & test" alt="Accuracy logs for train & test" src="assets/model_d_accuracy.png">
+<img title="Accuracy logs for train & test" alt="Accuracy logs for train & test" src="../../assets/assignment_4/model_d_accuracy.png">
 
 ### Text Logs
 ```
@@ -547,4 +547,4 @@ Analysis:
  - Dropout, Global Average Pooling & LR Scheduler not working.
  - No over-fitting, model is capable if pushed further
 
-[Link to Model D](https://github.com/ankithaldar/tsai_eva8_assignments/blob/main/eva8_phase01/assignment_4/src/model/test_model_d.py)
+[Link to Model D](https://github.com/ankithaldar/tsai_eva8_assignments/blob/main/eva8_phase01/src/model/test_model_4d.py)

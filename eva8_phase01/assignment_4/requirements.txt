@@ -1,7 +1,0 @@
-matplotlib
-neptune-client
-PyYAML
-torch
-torchmetrics
-torchsummary
-torchvision

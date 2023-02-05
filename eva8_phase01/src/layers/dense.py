@@ -23,7 +23,7 @@ class Dense(nn.Module):
     bias=True,
     device=None,
     dtype=None,
-    activation='relu',
+    activation=None,
     initializer='xavier_uniform'
   ):
     super().__init__()
@@ -35,12 +35,15 @@ class Dense(nn.Module):
       device=device,
       dtype=dtype
     )
-    self.init_weights(initializer)
+    self.__init_weights__(initializer)
 
-    self.activation = self.get_activation(activation)
+    if activation is not None:
+      self.activation = self.__get_activation__(activation)
+    else:
+      self.activation = None
 
 
-  def get_activation(self, activation):
+  def __get_activation__(self, activation):
     act_dict = {
       'relu': nn.ReLU(),
       'tanh': nn.Tanh(),
@@ -50,10 +53,10 @@ class Dense(nn.Module):
       'none': None
     }
 
-    return act_dict.get(activation.lower(), nn.ReLU())
+    return act_dict.get(activation.lower(), None)
 
 
-  def init_weights(self, initializer):
+  def __init_weights__(self, initializer):
     if initializer.lower() == 'xavier_uniform':
       nn.init.xavier_uniform_(self.dense.weight)
     elif initializer.lower() == 'kaiming_uniform':

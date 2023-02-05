@@ -11,10 +11,12 @@ import torchmetrics
 #   script imports
 from dataloaders.test_model_dataset import MNISTDataLoader
 from engine.base.base_engine import BaseEngine
-from model.test_model_3a import TestModel3A
+from model.test_model_a import TestModelA
+from model.test_model_b import TestModelB
+from model.test_model_c import TestModelC
+from model.test_model_d import TestModelD
 
 #imports
-
 
 # classes
 class TestModelEngine(BaseEngine):
@@ -26,26 +28,38 @@ class TestModelEngine(BaseEngine):
   def _init_train_dataloader(self):
     self.train_ds = MNISTDataLoader(
       root=str(self.hparams.data_path),
-      train=True
+      train=True,
+      augments=self.hparams.do_augment
     )
 
 
   def _init_test_dataloader(self):
     self.test_ds = MNISTDataLoader(
       root=str(self.hparams.data_path),
-      train=False
+      train=False,
+      augments=self.hparams.do_augment
     )
 
 
   def _init_model(self):
-    if self.hparams.model_name == 'test_model_3a':
-      self.model = TestModel3A(num_classes=self.hparams.num_classes)
+    if self.hparams.model_name == 'test_model_a':
+      self.model = TestModelA(num_classes=self.hparams.num_classes)
+    elif self.hparams.model_name == 'test_model_b':
+      self.model = TestModelB(num_classes=self.hparams.num_classes)
+    elif self.hparams.model_name == 'test_model_c':
+      self.model = TestModelC(num_classes=self.hparams.num_classes)
+    elif self.hparams.model_name == 'test_model_d':
+      self.model = TestModelD(num_classes=self.hparams.num_classes)
 
 
   def _init_loss_function(self):
     if self.hparams.loss_function == 'CrossEntropyLoss':
       self.loss_function = {
         'loss_mnist': nn.CrossEntropyLoss()
+      }
+    elif self.hparams.loss_function == 'NLLLoss':
+      self.loss_function = {
+        'loss_mnist': nn.NLLLoss(reduction='sum')
       }
 
 
@@ -64,12 +78,18 @@ class TestModelEngine(BaseEngine):
 
 
   def _init_scheduler(self):
+    if self.hparams.lr_scheduler == 'None':
+      pass
     if self.hparams.lr_scheduler == 'StepLR':
       self.scheduler = torch.optim.lr_scheduler.StepLR(
         self.optimizer,
         **self.hparams.lr_scheduler_args
       )
-
+    elif self.hparams.lr_scheduler == 'MultiStepLR':
+      self.scheduler = torch.optim.lr_scheduler.MultiStepLR(
+        self.optimizer,
+        **self.hparams.lr_scheduler_args
+      )
 
   def _init_metrics(self):
     self.metrics = {}
@@ -79,48 +99,19 @@ class TestModelEngine(BaseEngine):
           task='multiclass',
           num_classes=self.hparams.num_classes
         )
-        # self.metrics['m_sum_accuracy'] = torchmetrics.Accuracy(
-        #   task='multiclass',
-        #   num_classes=2*self.hparams.num_classes - 1
-        # )
+        self.metrics['test_m_mnist_accuracy'] = torchmetrics.Accuracy(
+          task='multiclass',
+          num_classes=self.hparams.num_classes
+        )
       elif each == 'f1score':
         self.metrics['m_mnist_f1score'] = torchmetrics.F1Score(
           task='multiclass',
           num_classes=self.hparams.num_classes
         )
-        # self.metrics['m_sum_f1score'] = torchmetrics.F1Score(
-        #   task='multiclass',
-        #   num_classes=2*self.hparams.num_classes - 1
-        # )
-
-
-  def train_step(self, batch, train:bool=False):
-    image, label = [i.to(self.device) for i in batch]
-    pred_label = self.model(image)
-
-    if train:
-      loss_mnist = self.loss_function['loss_mnist'](pred_label, label)
-      # loss_sum = self.loss_function['loss_sum'](pred_sum, label_sum.type(torch.long))
-
-      self.optimizer.zero_grad()
-
-      loss_mnist.backward()
-      # loss_sum.backward()
-      self.optimizer.step()
-
-    for metric, metric_obj in self.metrics.items():
-      if 'mnist' in metric:
-        metric_obj(pred_label.argmax(dim=1), label)
-
-    if train:
-      return {
-        'loss_mnist': loss_mnist.item(),
-        # 'loss_sum': loss_sum.item()
-      }
-
-
-  def _init_logger(self):
-    pass
+        self.metrics['test_m_mnist_f1score'] = torchmetrics.F1Score(
+          task='multiclass',
+          num_classes=self.hparams.num_classes
+        )
 
 # classes
 

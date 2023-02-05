@@ -1,13 +1,20 @@
 seed: 42
-model_name: "test_model_a"
+model_name: "test_model_4d"
 epochs: 15
 batch_size: 128
 num_classes: 10
-do_augment: None
+do_augment:
+  - 'RandomRotation'
 loss_function: "CrossEntropyLoss"
 optimizer: "SGD"
 learning_rate: 0.01
-lr_scheduler: None
+lr_scheduler: "MultiStepLR"
+lr_scheduler_args:
+  milestones:
+    - 6
+    - 8
+    - 9
+  gamma: 0.1
 train_args:
   shuffle: True
   num_workers: 2

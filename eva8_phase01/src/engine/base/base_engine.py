@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''
-Base Engine to train models
-'''
+'''Base Engine to train models'''
 
 
 #imports
 import torch
 #   script imports
 from callbacks.history import History
+from callbacks.neptune_callback import NeptuneCallback
+from callbacks.console_logger import ConsoleLogger
+from callbacks.callback_handler import CallbackHandler
 from torch.utils.data import DataLoader
 from torchsummary import summary
 
@@ -18,10 +19,7 @@ from torchsummary import summary
 
 # classes
 class BaseEngine:
-  '''
-  Base Engine to train models
-  '''
-
+  '''Base Engine to train models'''
   def __init__(self, hparams):
     self.hparams = hparams
 
@@ -41,6 +39,9 @@ class BaseEngine:
   def _init_test_dataloader(self):
     self.test_ds = None
 
+  def _init_valid_dataloader(self):
+    self.valid_ds = None
+
   def _init_model(self):
     raise NotImplementedError
 
@@ -54,29 +55,47 @@ class BaseEngine:
     raise NotImplementedError
 
   def _init_scheduler(self):
-    self.scheduler = None
+    raise NotImplementedError
+
+  def _init_callbacks(self):
+    self.callback = []
+
+    history = History()
+    # create history recorder callback
+    for each in list(self.loss_function.keys()) + list(self.metrics.keys()):
+      history.add_keys(each)
+      history.add_keys(f'test_{each}')
+
+    self.callback.append(history)
+
+    for each in self.hparams.callback_list:
+      if each == 'logging':
+        self._init_logger()
+
+    self.callbacks = CallbackHandler(self.callback)
+
+  def _init_logger(self):
+    if self.hparams.logger_name is not None:
+      logger = NeptuneCallback(
+        project_name=self.hparams.logger_init_params['project_name'],
+        project_params=self.hparams.model_params
+      )
+      self.callback.append(logger)
+
+      logger = ConsoleLogger()
+      self.callback.append(logger)
+
+  def _seed_it_all(self):
+    pass
 
   def _show_summary(self):
     print('--------------------------------')
     print('Model Summary')
-    print('--------------------------------')
     print(summary(self.model, input_size=(1, 28, 28)))
-    print('--------------------------------')
-
-  def _init_callbacks(self):
-    self.history = History()
-
-    # print(list(self.loss_function.keys()))
-
-    # create history recorder callback
-    for each in list(self.loss_function.keys()) + list(self.metrics.keys()):
-      self.history.add_keys(each)
 
   def setup(self):
     self._init_distribution()
-
     self._show_summary()
-
 
   def _init_distribution(self):
     # Check and Assign GPU if available else assign CPU
@@ -119,62 +138,104 @@ class BaseEngine:
     for metrics in self.metrics.keys():
       self.metrics[metrics] = self.metrics[metrics].to(self.device)
 
-  def train_step(self):
-    raise NotImplementedError
+  def train_step(self, batch, train:bool=True):
+    image, label = [i.to(self.device) for i in batch]
 
-  def test_step(self):
-    raise NotImplementedError
+    pred_label = self.model(image)
+    loss_mnist = self.loss_function['loss_mnist'](pred_label, label)
 
-  def _init_logger(self):
-    raise NotImplementedError
+    if train:
+      self.optimizer.zero_grad()
+      loss_mnist.backward()
+      self.optimizer.step()
 
-  def _seed_it_all(self):
-    pass
+    for metric, metric_obj in self.metrics.items():
+      if 'mnist' in metric:
+        b_acc = metric_obj(pred_label.argmax(dim=1), label)
 
-  def train(self):
-    print(f'Training {self.hparams.model_name}...')
-    self.history.on_train_start()
-    for epoch in range(self.hparams.epochs):
-      # get epoch loss
-      epoch_loss = dict([(key, []) for key in self.loss_function.keys()])
-      epoch_accuracy = dict([(key, 0) for key in self.metrics.keys()])
-      # create and train batch
-      for batch in self.train_loader:
-        loss_values = self.train_step(batch, train=True)
+    if train:
+      self.callbacks.on_batch_end(
+        loss_mnist=loss_mnist.item(),
+        m_mnist_accuracy=b_acc
+      )
+      return {
+        'loss_mnist': loss_mnist.item()
+      }
+    else:
+      self.callbacks.on_test_batch_end(
+        loss_mnist=loss_mnist.item(),
+        m_mnist_accuracy=b_acc
+      )
+      return {
+        'test_loss_mnist': loss_mnist.item()
+      }
+
+  def training(self, epoch):
+    # self.callbacks.on_train_begin()
+
+    # get epoch loss
+    epoch_loss = dict([(key, []) for key in self.loss_function.keys()])
+    epoch_metrics = dict([(key, 0) for key in self.metrics.keys()])
+
+    self.model.train()
+    self.callbacks.on_epoch_begin()
+
+    for b_idx, batch in enumerate(self.train_loader):
+      self.callbacks.on_batch_begin()
+
+      loss_values = self.train_step(batch, train=True)
+
+      # create logs for update history
+      for key, value in loss_values.items():
+        epoch_loss[key].append(value)
+
+    for key, value in self.metrics.items():
+      epoch_metrics[key] = value.compute().item()
+
+    for key, value in epoch_loss.items():
+      epoch_loss[key] = sum(epoch_loss[key])/len(epoch_loss[key])
+
+    self.callbacks.on_epoch_end(
+      epoch=epoch,
+      **epoch_loss,
+      **epoch_metrics
+    )
+
+  def testing(self, epoch):
+    epoch_loss = dict([(f'test_{key}', []) for key in self.loss_function.keys()])
+    epoch_metrics = dict([(f'test_{key}', 0) for key in self.metrics.keys()])
+
+    self.model.eval()
+    self.callbacks.on_test_epoch_begin()
+
+    with torch.no_grad():
+      for b_idx, batch in enumerate(self.test_loader):
+        self.callbacks.on_test_batch_begin()
+
+        loss_values = self.train_step(batch, train=False)
 
         # create logs for update history
         for key, value in loss_values.items():
           epoch_loss[key].append(value)
 
-      for key, value in self.metrics.items():
-        epoch_accuracy[key] = value.compute().item()
+    for key, value in self.metrics.items():
+      epoch_metrics[key] = value.compute().item()
 
-      for key, value in epoch_loss.items():
-        epoch_loss[key] = sum(epoch_loss[key])/len(epoch_loss[key])
+    for key, value in epoch_loss.items():
+      epoch_loss[key] = sum(epoch_loss[key])/len(epoch_loss[key])
 
-      self.history.on_epoch_end(epoch, {**epoch_loss, **epoch_accuracy})
-      print(self.create_print_statement_per_epoch(epoch))
+    self.callbacks.on_test_epoch_end(
+      epoch=epoch,
+      **epoch_loss,
+      **epoch_metrics
+    )
 
+  def fit(self):
+    for epoch in range(self.hparams.epochs):
+      self.training(epoch=epoch)
+      self.testing(epoch=epoch)
 
-    self.history.on_train_end(str(self.hparams.charts))
-    print('Training Ended...')
-
-  def test(self):
-    print(f'Testing {self.hparams.model_name}...')
-    for batch in self.test_loader:
-      self.train_step(batch)
-
-    print(self.create_print_statement_per_epoch(epoch=0))
-    print('Testing Ended...')
-
-
-  def create_print_statement_per_epoch(self, epoch):
-    print_st = f'Epoch: {str(epoch+1).zfill(len(str(self.hparams.epochs)))}'
-    for metric, metric_obj in self.metrics.items():
-      print_st += f' | {metric}: {metric_obj.compute()*100:.2f}%'
-      metric_obj.reset()
-
-    return print_st
+    self.callbacks.on_train_end(save_folder=self.hparams.charts)
 
 # classes
 

@@ -18,7 +18,7 @@ from layers.dense import Dense
 
 class ConvBlock(nn.Module):
   '''Creating the Convolution block'''
-  def __init__(self, in_channels: int, out_channels: int, dropout:float=0.1, padding:int=0):
+  def __init__(self, in_channels: int, out_channels: int, dropout:float=0.1, padding:int=0, pool:bool=False):
 
     super(ConvBlock, self).__init__()
     self.conv_1 = Conv2D(
@@ -31,6 +31,10 @@ class ConvBlock(nn.Module):
     self.batch_norm_1 = nn.BatchNorm2d(num_features=out_channels)
     self.relu_1 = nn.ReLU(inplace=False)
 
+    self.pool_1 = nn.MaxPool2d(kernel_size=(2, 2))
+
+    self.if_pool = pool
+
     self.dropout_1 = nn.Dropout(p=dropout)
 
   def forward(self, input: torch.Tensor):
@@ -38,6 +42,8 @@ class ConvBlock(nn.Module):
     x = self.conv_1(x)
     x = self.batch_norm_1(x)
     x = self.relu_1(x)
+    if self.if_pool:
+      x = self.pool_1(x)
     x = self.dropout_1(x)
     return x
 
@@ -65,11 +71,11 @@ class TransitionBlock(nn.Module):
     return x
 
 
-class TestModelD(nn.Module):
+class TestModel4B(nn.Module):
   '''TestModel for Assignment 4'''
 
   def __init__(self, num_classes: int):
-    super(TestModelD, self).__init__()
+    super(TestModel4B, self).__init__()
 
     # LAYERS FOR IMAGE RECOGNITION
     self.conv_block_1 = ConvBlock(in_channels= 1, out_channels=16)
@@ -79,19 +85,17 @@ class TestModelD(nn.Module):
 
     self.pool_1 = nn.MaxPool2d(2, 2)
 
-    self.conv_block_3 = ConvBlock(in_channels=10, out_channels=16)
-    self.conv_block_4 = ConvBlock(in_channels=16, out_channels=16)
-    self.conv_block_5 = ConvBlock(in_channels=16, out_channels=10)
+    self.conv_block_3 = ConvBlock(in_channels=10, out_channels=10)
+    self.conv_block_4 = ConvBlock(in_channels=10, out_channels=10)
+    self.conv_block_5 = ConvBlock(in_channels=10, out_channels=10)
     self.conv_block_6 = ConvBlock(in_channels=10, out_channels=10, padding=1)
 
     self.conv_1 = Conv2D(
       in_channels=10,
       out_channels=10,
-      kernel_size=(1, 1),
+      kernel_size=(6, 6),
       bias=False
     )
-
-    self.gap_layer_1 = nn.AvgPool2d(kernel_size=(6, 6))
 
     self.log_softmax = nn.LogSoftmax(dim=-1)
 
@@ -109,8 +113,6 @@ class TestModelD(nn.Module):
     x = self.conv_block_4(x)
     x = self.conv_block_5(x)
     x = self.conv_block_6(x)
-
-    x = self.gap_layer_1(x)
 
     x = self.conv_1(x)
     x = x.view(-1, 10)

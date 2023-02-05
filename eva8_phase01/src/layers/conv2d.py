@@ -31,7 +31,7 @@ class Conv2D(nn.Module):
     padding_mode='zeros',
     device=None,
     dtype=None,
-    activation='relu',
+    activation=None,
     kernel_initializer='xavier_uniform',
   ):
     super().__init__()
@@ -48,22 +48,26 @@ class Conv2D(nn.Module):
       device=device,
       dtype=dtype
     )
-    self.init_weights(kernel_initializer)
+    self.__init_weights__(kernel_initializer)
 
-    self.activation = self.get_activation(activation)
+    if activation is not None:
+      self.activation = self.__get_activation__(activation)
+    else:
+      self.activation = None
 
 
-  def get_activation(self, activation):
+  def __get_activation__(self, activation):
     act_dict = {
       'relu': nn.ReLU(),
       'tanh': nn.Tanh(),
-      'sigmoid': nn.Sigmoid()
+      'sigmoid': nn.Sigmoid(),
+      'none': None
     }
 
-    return act_dict.get(activation.lower(), nn.ReLU())
+    return act_dict.get(activation.lower(), None)
 
 
-  def init_weights(self, kernel_initializer):
+  def __init_weights__(self, kernel_initializer):
     if kernel_initializer.lower() == 'xavier_uniform':
       nn.init.xavier_uniform_(self.conv.weight)
     elif kernel_initializer.lower() == 'kaiming_uniform':
@@ -73,7 +77,10 @@ class Conv2D(nn.Module):
 
 
   def forward(self, input):
-    return self.activation(self.conv(input))
+    if self.activation is None:
+      return self.conv(input)
+    else:
+      return self.activation(self.conv(input))
 # classes
 
 def main():

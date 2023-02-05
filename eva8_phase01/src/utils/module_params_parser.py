@@ -56,16 +56,33 @@ class ModelParamsDecoder:
     self.train_args = params['train_args']
     self.test_args = params['test_args']
 
+    self.do_augment = params['do_augment']
+
     self.loss_function = params['loss_function']
     self.optimizer = params['optimizer']
 
     self.learning_rate = params['learning_rate']
     self.lr_scheduler = params['lr_scheduler']
-    self.lr_scheduler_args = params['lr_scheduler_args']
+    if self.lr_scheduler != 'None':
+      self.lr_scheduler_args = params['lr_scheduler_args']
 
     self.metrics = params['metrics']
 
+    self.callback_list = params['callbacks']
+
     self.logger_name = params['logger']
+    self.logger_init_params = params['logger_init_params']
+
+    self.model_params = {
+      'assignement': self.logger_init_params['assignment'],
+      'model_name': self.model_name,
+      'epochs': self.epochs,
+      'batch_size': self.batch_size,
+      'loss_function': self.loss_function,
+      'optimizer': self.optimizer,
+      'learning_rate': self.learning_rate,
+      'metrics': self.metrics
+    }
 
     print('model parameters loaded...')
 

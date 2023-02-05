@@ -65,11 +65,11 @@ class TransitionBlock(nn.Module):
     return x
 
 
-class TestModelC(nn.Module):
+class TestModel4C(nn.Module):
   '''TestModel for Assignment 4'''
 
   def __init__(self, num_classes: int):
-    super(TestModelC, self).__init__()
+    super(TestModel4C, self).__init__()
 
     # LAYERS FOR IMAGE RECOGNITION
     self.conv_block_1 = ConvBlock(in_channels= 1, out_channels=16)

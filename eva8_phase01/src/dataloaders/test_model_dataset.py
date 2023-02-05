@@ -9,7 +9,7 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset
-
+from typing import List
 #   script imports
 #imports
 
@@ -18,20 +18,13 @@ from torch.utils.data import Dataset
 class MNISTDataLoader(Dataset):
   '''Dataloader for downloading and batching data'''
 
-  def __init__(self, root:str='', train=False):
+  def __init__(self, root:str='', train=False, augments='None'):
     # super(DataLoader, self).__init__()
+    self.augments = augments
     self.dataset = self.__download_dataset__(root=root, train=train)
 
     self.labels = self.dataset.targets
     self.image = self.dataset.data
-
-    # generate random number
-    # self.random_num = torch.randint(
-    #   low=0,
-    #   high=10,
-    #   size=(len(self.dataset),),
-    #   dtype=torch.float
-    # )
 
   def __download_dataset__(self, root:str='', train=False):
     '''Downloads the dataset'''
@@ -40,7 +33,7 @@ class MNISTDataLoader(Dataset):
       root=root,
       train=train,
       download=True,
-      transform=transforms.ToTensor()
+      transform=transforms.Compose(self.__get_augments__(train))
     )
 
   def __len__(self):
@@ -51,9 +44,22 @@ class MNISTDataLoader(Dataset):
 
     image = self.image[index]
     label = self.labels[index]
-    # rand_int = self.random_num[index]
 
-    return (image/255.).reshape([1, 28, 28]), label
+    return (image/1.).reshape([1, 28, 28]), label
+
+  def __get_augments__(self, train=False):
+    augments = [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
+    if not train:
+      return augments
+
+    if isinstance(self.augments, list) and train:
+      for each in self.augments:
+        if each == 'RandomRotation':
+          augments.insert(0, transforms.RandomRotation((-7.0, 7.0), fill=(1,)))
+        elif each == 'ColorJitter':
+          augments.insert(0, transforms.ColorJitter(brightness=0.10, contrast=0.1, saturation=0.10, hue=0.1))
+
+      return augments
 
 # classes
 
