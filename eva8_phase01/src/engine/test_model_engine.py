@@ -11,10 +11,11 @@ import torchmetrics
 #   script imports
 from dataloaders.test_model_dataset import MNISTDataLoader
 from engine.base.base_engine import BaseEngine
-from model.test_model_a import TestModelA
-from model.test_model_b import TestModelB
-from model.test_model_c import TestModelC
-from model.test_model_d import TestModelD
+from model.test_model_3a import TestModel3A
+from model.test_model_4a import TestModel4A
+from model.test_model_4b import TestModel4B
+from model.test_model_4c import TestModel4C
+from model.test_model_4d import TestModel4D
 
 #imports
 
@@ -42,14 +43,16 @@ class TestModelEngine(BaseEngine):
 
 
   def _init_model(self):
-    if self.hparams.model_name == 'test_model_a':
-      self.model = TestModelA(num_classes=self.hparams.num_classes)
-    elif self.hparams.model_name == 'test_model_b':
-      self.model = TestModelB(num_classes=self.hparams.num_classes)
-    elif self.hparams.model_name == 'test_model_c':
-      self.model = TestModelC(num_classes=self.hparams.num_classes)
-    elif self.hparams.model_name == 'test_model_d':
-      self.model = TestModelD(num_classes=self.hparams.num_classes)
+    if self.hparams.model_name == 'test_model_3a':
+      self.model = TestModel3A(num_classes=self.hparams.num_classes)
+    elif self.hparams.model_name == 'test_model_4a':
+      self.model = TestModel4A(num_classes=self.hparams.num_classes)
+    elif self.hparams.model_name == 'test_model_4b':
+      self.model = TestModel4B(num_classes=self.hparams.num_classes)
+    elif self.hparams.model_name == 'test_model_4c':
+      self.model = TestModel4C(num_classes=self.hparams.num_classes)
+    elif self.hparams.model_name == 'test_model_4d':
+      self.model = TestModel4D(num_classes=self.hparams.num_classes)
 
 
   def _init_loss_function(self):

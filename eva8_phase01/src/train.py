@@ -14,10 +14,12 @@ from utils.module_params_parser import ModelParamsDecoder
 #imports
 
 def main(hparams=None):
-  # pe = LeNetEngine(hparams)
-  pe = TestModelEngine(hparams)
-  pe.train()
-  pe.test()
+  if hparams.logger_init_params['assignment'] == 'Assignment 2.5':
+    pe = LeNetEngine(hparams)
+  elif hparams.logger_init_params['assignment'] in ['Assignment 3', 'Assignemnt 4']:
+    pe = TestModelEngine(hparams)
+
+  pe.fit()
 
 
 if __name__ == '__main__':
