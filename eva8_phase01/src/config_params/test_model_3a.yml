@@ -16,6 +16,7 @@ test_args:
   shuffle: True
   num_workers: 2
   prefetch_factor: 1
+normalization: 'none'
 callbacks:
   - 'logging'
 metrics:

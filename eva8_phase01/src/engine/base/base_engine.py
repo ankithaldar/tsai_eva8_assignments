@@ -230,10 +230,35 @@ class BaseEngine:
       **epoch_metrics
     )
 
+  def get_misclassified_images(self):
+    misclassified_imgs = {}
+    self.model.eval()
+    idx = 0
+    with torch.no_grad():
+      for each_image in self.test_loader:
+        image, label = [i.to(self.device) for i in each_image]
+        preds = self.model(image).argmax(dim=1, keepdim=True)
+
+        for sample in range(image.shape[0]):
+          if (label[sample] != preds[sample]):
+            misclassified_imgs[idx] = [image[sample].cpu(), label[sample].cpu(), preds[sample].cpu()]
+            self.callbacks.run_predictions(
+              image = torch.squeeze(image[sample].cpu()),
+              label=label[sample].cpu(),
+              pred_label=preds[sample].cpu()
+            )
+            idx += 1
+            if idx == 20:
+              break
+
+
+
   def fit(self):
     for epoch in range(self.hparams.epochs):
       self.training(epoch=epoch)
       self.testing(epoch=epoch)
+
+    self.get_misclassified_images()
 
     self.callbacks.on_train_end(save_folder=self.hparams.charts)
 

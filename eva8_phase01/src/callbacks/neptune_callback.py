@@ -63,3 +63,11 @@ class NeptuneCallback(Callback):
       msg='test/metrics/epoch/loss',
       metric_value=kwargs['test_loss_mnist']
     )
+
+  def run_predictions(self, **kwargs):
+    self.logger.log_predictions(
+      msg='test/predictions',
+      image=kwargs['image'],
+      label=kwargs['label'],
+      pred_label=kwargs['pred_label']
+    )

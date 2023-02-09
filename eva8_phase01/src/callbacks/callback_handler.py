@@ -34,6 +34,7 @@ class Callback:
   def on_test_epoch_end(self, **kwargs): pass
   def on_test_batch_begin(self, **kwargs): pass
   def on_test_batch_end(self, **kwargs): pass
+  def run_predictions(self, **kwargs): pass
 
 
 class CallbackHandler:
@@ -90,6 +91,10 @@ class CallbackHandler:
   def on_test_batch_end(self, **kwargs):
     for callback in self.callbacks:
       callback.on_test_batch_end(**kwargs)
+
+  def run_predictions(self, **kwargs):
+    for callback in self.callbacks:
+      callback.run_predictions(**kwargs)
 
 # classes
 

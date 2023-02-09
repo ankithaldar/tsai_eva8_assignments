@@ -16,7 +16,7 @@ from utils.module_params_parser import ModelParamsDecoder
 def main(hparams=None):
   if hparams.logger_init_params['assignment'] == 'Assignment 2.5':
     pe = LeNetEngine(hparams)
-  elif hparams.logger_init_params['assignment'] in ['Assignment 3', 'Assignemnt 4']:
+  elif hparams.logger_init_params['assignment'] in ['Assignment 3', 'Assignment 4', 'Assignment 5']:
     pe = TestModelEngine(hparams)
 
   pe.fit()

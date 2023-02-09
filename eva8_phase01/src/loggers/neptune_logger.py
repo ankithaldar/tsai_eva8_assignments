@@ -24,6 +24,14 @@ class NeptuneLogger:
   def log_metric(self, msg, metric_value):
     self.run[msg].append(metric_value)
 
+  def log_predictions(self, msg, image, label, pred_label):
+    # print(image.size())
+    self.run[msg].log(
+      neptune.types.File.as_image(image.numpy()/255.),
+      name=f'Ground Truth: {label}',
+      description=f'Predicted: {pred_label.item()}'
+    )
+
   def log_param(self, project_params):
     self.run['model/params'] = {k: str(v) for k, v in project_params.items()}
 

@@ -16,6 +16,7 @@ from model.test_model_4a import TestModel4A
 from model.test_model_4b import TestModel4B
 from model.test_model_4c import TestModel4C
 from model.test_model_4d import TestModel4D
+from model.test_model_5 import TestModel5
 
 #imports
 
@@ -53,6 +54,8 @@ class TestModelEngine(BaseEngine):
       self.model = TestModel4C(num_classes=self.hparams.num_classes)
     elif self.hparams.model_name == 'test_model_4d':
       self.model = TestModel4D(num_classes=self.hparams.num_classes)
+    elif self.hparams.model_name in ['test_model_5_bn', 'test_model_5_gn', 'test_model_5_ln']:
+      self.model = TestModel5(num_classes=self.hparams.num_classes, norm_type=self.hparams.norm_type)
 
 
   def _init_loss_function(self):

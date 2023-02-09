@@ -73,8 +73,10 @@ class ModelParamsDecoder:
     self.logger_name = params['logger']
     self.logger_init_params = params['logger_init_params']
 
+    self.norm_type = params['normalization']
+
     self.model_params = {
-      'assignement': self.logger_init_params['assignment'],
+      'assignment': self.logger_init_params['assignment'],
       'model_name': self.model_name,
       'epochs': self.epochs,
       'batch_size': self.batch_size,
